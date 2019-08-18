@@ -1,7 +1,8 @@
 //Universal Constants///////////////////////////////////////////////////////////////////////////////////////
 const G = Math.pow(6.6, -11);
 const planets  = [];
-const seconds = 300; //this will a constant representing the time inside de simulation each frame.
+const scale = 0.125*Math.pow(10,10); // One pixel is equal to 500000m
+const seconds = 200 //this will a constant representing the time inside de simulation each frame.
 
 //Classes///////////////////////////////////////////////////////////////////////////////////////////////////
 class Body{
@@ -17,7 +18,6 @@ class Body{
     if(this.color !== undefined){
       let c = color(this.color);
       fill(c);
-      noStroke();
     }
     circle(this.Ox, this.Oy, this.size);
   }
@@ -54,9 +54,12 @@ class Planet extends Body{
 
     */
   
-    var distance = Math.sqrt(Math.pow(this.Ox - starOx, 2) +  Math.pow(this.Oy - starOy, 2)) // #1
+    var distance = Math.sqrt(Math.pow(this.Ox - starOx, 2) +  Math.pow(this.Oy - starOy, 2))// #1
+    var distance = distance
+    //console.log(distance);
     let acellaration = (starMass*G)/Math.pow(distance,2); // #2
-    let displacement = ((acellaration*Math.pow(seconds,2)/2)); // #2
+    let displacement = ((acellaration*Math.pow(seconds,2)/2)); //#2
+    console.log(displacement);
     var tetha = Math.asin((Math.abs(this.Oy - starOy)/distance)); // #3
   
     let result = [displacement, distance, tetha];
@@ -68,8 +71,8 @@ class Planet extends Body{
     let tetha = result[2];
     
     //this piece of code discorver the new position (x,y) based onde the displacement. 
-    let x = Math.abs((displacement))*Math.cos(tetha)*5; 
-    let y = Math.abs((displacement)*Math.sin(tetha))*5;
+    let x = Math.abs((displacement))*Math.cos(tetha)*10; 
+    let y = Math.abs((displacement)*Math.sin(tetha))*10;
 
 
     //this piece of code adptates the position(x,y) based on the realive position between the bodies
@@ -100,4 +103,5 @@ class Planet extends Body{
     var position = [x,y];
     return position;
   }
+  
 }
