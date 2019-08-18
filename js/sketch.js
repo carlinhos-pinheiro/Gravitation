@@ -23,7 +23,6 @@ function setup() {
   canvasHeight = window.innerHeight  - canvasOy;
   let canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.position(canvasOx,canvasOy);
-  createElement("h1", "Hello from p5.js");
 
 }
 
@@ -35,9 +34,10 @@ const newStar = new Star(
   height/2,
   "white",
   Math.pow(1.9,30)
-)
+);
 
-/*
+/* 
+I initialized those objects while coding to test
 
 const earth = new Planet(
   7,
@@ -104,7 +104,7 @@ function draw() {
     }
   });
 
-  //console.log(mars.Ox);
+   //console.log(mars.Ox);
 
   newStar.put();
 }
