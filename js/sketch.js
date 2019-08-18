@@ -30,9 +30,9 @@ function setup() {
 //Initializing objects///////////////////////////////////////////////////////////////////////////////////////////////////
 const newStar = new Star(
   sunSize,
-  width/2 +sunSize/2,
+  width/2,
   height/2,
-  "white",
+  "black",
   Math.pow(1.9,30)
 );
 
@@ -83,7 +83,7 @@ planets.push(mars, earth, venus, monoko);
 function draw() {
   // put drawing code here
 
-  backgroundColor = ("#282a3a");
+  backgroundColor = ("whitesmoke");
   background(backgroundColor);
 
   planets.forEach(element => {
@@ -97,14 +97,17 @@ function draw() {
         console.log(planets);
       }else{
         position = element.updatePosition(result, newStar.Ox, newStar.Oy);
+        //inertia = element.inertia(newStar.Ox, newStar.Oy);
         element.Ox =  element.Ox + position[0];
         element.Oy = element.Oy + position[1];
+        //console.log(inertia);
       }
       
     }
   });
 
    //console.log(mars.Ox);
+
 
   newStar.put();
 }
