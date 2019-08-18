@@ -1,7 +1,7 @@
 //Universal Constants///////////////////////////////////////////////////////////////////////////////////////
 const G = Math.pow(6.6, -11);
 const planets  = [];
-const seconds = 300;
+const seconds = 300; //this will a constant representing the time inside de simulation each frame.
 
 //Classes///////////////////////////////////////////////////////////////////////////////////////////////////
 class Body{
@@ -45,13 +45,19 @@ class Planet extends Body{
     this.name = name;
   }
   feelGravity(starOx, starOy, starMass){ //funtions 
+    /*
+    This fuction will recieve the Star mass and position.
+    1# Based on that data it will calculate the distance between the planet and star using analytic geometry
+    2# After the distance is calculated, we discorver the acellaration and displacement.
+    3# Finally we discorver the angle between the line that represent the shortest distance between the planet and star
+    and any horizontal line. So that displacement can be derivated between the horizontal and vetical direction properly.
+
+    */
   
-    var distance = Math.sqrt(Math.pow(this.Ox - starOx, 2) +  Math.pow(this.Oy - starOy, 2))
-
-    var tetha = Math.asin((Math.abs(this.Oy - starOy)/distance));
-
-    let acellaration = (starMass*G)/Math.pow(distance,2);
-    let displacement = ((acellaration*Math.pow(seconds,2)/2));
+    var distance = Math.sqrt(Math.pow(this.Ox - starOx, 2) +  Math.pow(this.Oy - starOy, 2)) // #1
+    let acellaration = (starMass*G)/Math.pow(distance,2); // #2
+    let displacement = ((acellaration*Math.pow(seconds,2)/2)); // #2
+    var tetha = Math.asin((Math.abs(this.Oy - starOy)/distance)); // #3
   
     let result = [displacement, distance, tetha];
     return result;
@@ -59,12 +65,14 @@ class Planet extends Body{
 
   updatePosition(result, starOx, starOy){
     let displacement = result[0];
-    let distance = result[1];
     let tetha = result[2];
     
-    let x = Math.abs((displacement))*Math.cos(tetha)*5;
+    //this piece of code discorver the new position (x,y) based onde the displacement. 
+    let x = Math.abs((displacement))*Math.cos(tetha)*5; 
     let y = Math.abs((displacement)*Math.sin(tetha))*5;
 
+
+    //this piece of code adptates the position(x,y) based on the realive position between the bodies
     if(this.Ox > starOx && this.Oy === starOy){ // Case I
       x = x*-1;
       y = 0;
