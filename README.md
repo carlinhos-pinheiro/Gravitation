@@ -6,9 +6,9 @@ The main objective of this project is to build an web site where you can simulat
 
 
 I using these tolls to create the client side of the application:
-  #Html
-  #Css
-  #JavaScripit and p5.js and p5.dom.js
+  #Html,
+  #Css,
+  #JavaScript and the libs p5.js - p5.dom.js
   
   
 The libraries that I am using can be found here: https://p5js.org/libraries/
