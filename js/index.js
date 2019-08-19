@@ -1,3 +1,14 @@
+const button = document.querySelector("#button");
+let colors = ["#ff6188", "#ffd866", "#fc9867", "#ab9df2", "#78dce8","#c7fe40"]; // all possible colors of planets and top bar
+
+// Random color in the top bar in the site
+topColor = Math.floor(Math.random()*6);
+const topContainer = document.querySelector(".TopContainer")
+console.log(topContainer);
+topContainer.style.background = colors[topColor];
+
+
+
 //Adjusting game - div to user screen size
 const gameDiv = document.querySelector("#game");
 innerHeight = window.innerHeight
@@ -6,30 +17,30 @@ gameDiv.style.top = `${canvasOy}px`;
 
 
 //Interaction and response when hovering AddPlanet Text and Button.
-const button = document.querySelector("#button");
 const addPlanet = document.querySelector("#addPlanet");
 
+button.src = `js/css/img/button${topColor}.png`
 button.addEventListener("mouseover", function(){
   event.preventDefault();
   console.log("Hi");
-  this.src = "js/css/img/button-yellow.png";
-  addPlanet.style.color = "#ffd866";
+  this.src = `js/css/img/button-black.png`
+  addPlanet.style.color = "black";
 })
 
 button.addEventListener("mouseout", function(){
   event.preventDefault();
-  console.log("Hi");
-  this.src = "js/css/img/button.png";
+
+  this.src = `js/css/img/button${topColor}.png`;
   addPlanet.style.color = "whitesmoke";
 })
 
 
 //Adding mew planets!!///////////////////////////////////////////////////////////////////////////////////////////
 var i = 0;
-let colors = ["#ff6188", "#a9dc76", "#ffd866", "#fc9867", "#03B8E4", "#ab9df2", "#78dce8"]; // all possible colors of planets
+adding = false;
 
 
-function mouseClicked(){ // this funtions has call back funtion every time user clicks the screen.
+function mouseClicked(event){ // this funtions has call back funtion every time user clicks the screen.
   var x = event.clientX;
   var y = event.clientY;
   if(y > canvasOy && adding === true){
@@ -42,7 +53,7 @@ function mouseClicked(){ // this funtions has call back funtion every time user 
 
 function putPlanet(x, y){ //this function creates a new planet as new object
 
-  if(i === 7){
+  if(i === 6){
     i = 0;
   }
   newPlanet = new Planet(
@@ -61,43 +72,9 @@ function putPlanet(x, y){ //this function creates a new planet as new object
 button.addEventListener("click", function(){
   event.preventDefault();
   document.body.style.cursor = "cell";
-  this.src = "js/css/img/button-red.png";
-  addPlanet.style.color = "#ff6188";
   adding = true;
 })
 
 mouseClicked();
 
-
-
-
-/*
-var i = 0;
-colors = ["#ff6188", "#a9dc76", "#ffd866", "#fc9867", "#03B8E4", "#ab9df2", "#78dce8"];
-
-
-const form = document.querySelector("#InsertPlanet");
-form.addEventListener("click", (event) =>{
-  event.preventDefault();
-
-  const formData = new FormData(form);
-  x = parseFloat(formData.get("x"));
-  y = parseFloat(formData.get("y"));
-
-  if(i === 7){
-    i = 0;
-  }
-  newPlanet = new Planet(
-    10,
-    x,
-    y, 
-    colors[i]
-  );
-
-  i++;
-
-  planets.push(newPlanet);
-
-});
-*/
 
