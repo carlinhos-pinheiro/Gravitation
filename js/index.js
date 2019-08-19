@@ -1,7 +1,7 @@
 const button = document.querySelector("#button");
-let colors = ["#ff6188", "#ffd866", "#fc9867", "#ab9df2", "#78dce8","#c7fe40"]; // all possible colors of planets and top bar
+let colors = ["#ff6188", "#ffd866", "#fc9867", "#ab9df2", "#78dce8","#c7fe40"]; // all possible colors of planets and top bar in hexadecimal.
 
-// Random color in the top bar in the site
+// Random color of the Topbar
 topColor = Math.floor(Math.random()*6);
 const topContainer = document.querySelector(".TopContainer")
 console.log(topContainer);
@@ -23,33 +23,21 @@ button.src = `js/css/img/button${topColor}.png`
 button.addEventListener("mouseover", function(){
   event.preventDefault();
   console.log("Hi");
-  this.src = `js/css/img/button-black.png`
-  addPlanet.style.color = "black";
+  this.src = `js/css/img/button${topColor}.png`
+  addPlanet.style.color = "whitesmoke";
 })
 
 button.addEventListener("mouseout", function(){
   event.preventDefault();
 
-  this.src = `js/css/img/button${topColor}.png`;
-  addPlanet.style.color = "whitesmoke";
+  this.src = `js/css/img/button-black.png`;
+  addPlanet.style.color = "black";
 })
 
 
 //Adding mew planets!!///////////////////////////////////////////////////////////////////////////////////////////
 var i = 0;
 adding = false;
-
-
-function mouseClicked(event){ // this funtions has call back funtion every time user clicks the screen.
-  var x = event.clientX;
-  var y = event.clientY;
-  if(y > canvasOy && adding === true){
-    putPlanet(x, y);
-    adding = false;
-    document.body.style.cursor = "default";
-  }
-  return false;
-}
 
 function putPlanet(x, y){ //this function creates a new planet as new object
 
@@ -69,10 +57,22 @@ function putPlanet(x, y){ //this function creates a new planet as new object
 }
 
 
+function mouseClicked(event){ // this funtions has call back funtion every time user clicks the screen.
+  var x = event.clientX;
+  var y = event.clientY;
+  if(y > canvasOy && adding === true){
+    putPlanet(x, y);
+    adding = false;
+    document.body.style.cursor = "default";
+  }
+  return false;
+}
+
+
 button.addEventListener("click", function(){
   event.preventDefault();
   document.body.style.cursor = "cell";
-  adding = true;
+  adding = true; // the value true will activate the function MouseCliked to actually add a planet in the simulation
 })
 
 mouseClicked();
