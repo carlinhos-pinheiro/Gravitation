@@ -9,15 +9,16 @@ body{
   left: 0px;
   height: 70px;
   width: 100%;
-  background-color: black;
+  background-color:#fc9867;
 }
 
 .TopContainer h1{
-  color: #ffd866;
-  font-family: 'PT Sans Caption', sans-serif;
+  color: white;
+  font-family: 'Fredoka One', cursive;
   position: absolute;
-  bottom: 0px;
-  left: 43%;
+  bottom: -10px;
+  left: 40%;
+  font-size: 40px;
   
 }
 
