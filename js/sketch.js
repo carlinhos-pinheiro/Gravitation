@@ -30,7 +30,7 @@ function setup() {
 //Initializing objects///////////////////////////////////////////////////////////////////////////////////////////////////
 const newStar = new Star(
   sunSize,
-  width/2,
+  width*Math.sin(Math.PI/6),
   height/2,
   "black",
   Math.pow(1.9,30)
@@ -110,4 +110,5 @@ function draw() {
 
 
   newStar.put();
+  
 }
