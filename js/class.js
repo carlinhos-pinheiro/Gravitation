@@ -70,12 +70,12 @@ class Planet extends Body{
     let displacement = result[0];
     let tetha = result[2];
     
-    //this piece of code discorver the new position (x,y) based onde the displacement. 
+    //this piece of code discorvers the new position (x,y) based on the displacement. 
     let x = Math.abs((displacement))*Math.cos(tetha)*10; 
     let y = Math.abs((displacement)*Math.sin(tetha))*10;
 
 
-    //this piece of code adptates the position(x,y) based on the realive position between the bodies
+    //this piece of code adapts the position(x,y) based on the relative position between the bodies
     if(this.Ox > starOx && this.Oy === starOy){ // Case I
       x = x*-1;
       y = 0;
