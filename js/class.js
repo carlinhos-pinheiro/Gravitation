@@ -59,7 +59,7 @@ class Planet extends Body{
     //console.log(distance);
     let acellaration = (starMass*G)/Math.pow(distance,2); // #2
     let displacement = ((acellaration*Math.pow(seconds,2)/2)); //#2
-    console.log(displacement);
+    //console.log(displacement);
     var tetha = Math.asin((Math.abs(this.Oy - starOy)/distance)); // #3
   
     let result = [displacement, distance, tetha];
