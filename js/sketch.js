@@ -1,133 +1,117 @@
-//Universal Constants///////////////////////////////////////////////////////////////////////////////////////
-const G = Math.pow(6.6, -11);
-const planets  = [];
-const holes = [];
-const vectors = [];
-const scale = 0.125*Math.pow(10,10); // One pixel is equal to 500000m
-const seconds = 200 //this will a constant representing the time inside de simulation each frame.
-//Classes///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Body{
-  constructor(size, Ox, Oy, color, mass){
-    this.size = size;
-    this.Ox = Ox;
-    this.Oy = Oy;
-    this.color = color;
-    this.mass = mass;
-  }
+//Functions////////////////////////////////////////////////////////////////////////////////////////////////
 
-  put(){
-    if(this.color !== undefined){
-      let c = color(this.color);
-      fill(c);
-    }
-    circle(this.Ox, this.Oy, this.size);
-  }
 
-  isOut(){
-    if(this.Ox > 0 || this.Oy > 0){
-      return false;
-    }else{
-      return true;
-    }
-  }
-}
+//Necessary variables/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Hole extends Body{
-  constructor(size, Ox, Oy, color, mass){
-    super(size, Ox, Oy, color, mass);
-  }
+let canvasOx = 0;
+let canvasOy = 70;
 
+let width = window.innerWidth - canvasOx;
+let height = window.innerHeight  - canvasOy;
+
+var initialVelocity = 0;
+
+let sunSize = 40
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function setup() {
+  // put setup code here
+  canvasWidth = window.innerWidth - canvasOx;
+  canvasHeight = window.innerHeight  - canvasOy;
+  let canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.position(canvasOx,canvasOy);
 
 }
 
-class Planet extends Body{
-  constructor(size, Ox, Oy, color, mass, name){
-    super(size, Ox, Oy, color, mass);
-    this.name = name;
-  }
-  feelGravity(holes){ //funtions 
-    /*
-    This fuction will recieve all the holes mass and position.
-    1# Based on that data it will calculate the distance between the planet and black hole using analytic geometry
-    2# After the distance is calculated, we discorver the acellaration and displacement.
-    3# Finally we discorver the angle between the line that represent the shortest distance between the planet and star
-    and any horizontal line. So that displacement can be derivated between the horizontal and vetical direction properly.
 
-    Now that more than one black hole can exist in the simulation, the displacement caused by each Black hole will be summed in another function. So this funciton will now return an array of vectors.  
+//Initializing objects///////////////////////////////////////////////////////////////////////////////////////////////////
+const hole = new Hole(
+  sunSize,
+  width*Math.sin(Math.PI/6),
+  height/2,
+  "black",
+  Math.pow(1.9,30)
+);
 
-    */
-    holes.forEach(hole => {
-      console.log(hole);
-      var distance = Math.sqrt(Math.pow(this.Ox - hole.Ox, 2) +  Math.pow(this.Oy - hole.Oy, 2))// #1
-      //console.log(distance);
-      let acellaration = (hole.mass*G)/Math.pow(distance,2); // #2
-      let displacement = ((acellaration*Math.pow(seconds,2)/2)); //#2
-      //console.log(displacement);
-      var tetha = Math.asin((Math.abs(this.Oy - hole.Oy)/distance)); // #3
-      
 
-      //this piece of code discorver the new position (x,y) based onde the displacement. 
-      let x = Math.abs((displacement))*Math.cos(tetha)*10; 
-      let y = Math.abs((displacement)*Math.sin(tetha))*10;
-      
+/* 
+I initialized those objects while coding to test
 
-      //this piece of code adptates the position(x,y) based on the realive position between the bodies
-      if(this.Ox > hole.Ox && this.Oy === hole.Oy){ // Case I
-        x = x*-1;
-        y = 0;
-      }else if(this.Ox > hole.Ox && this.Oy < hole.Oy){ //Case 1
-        x = x*-1;
-  
-      }else if(this.Ox == hole.Ox && this.Oy < hole.Oy){ // Case II
-        x = 0;
-  
-      }else if(this.Ox < hole.Ox && this.Oy === hole.Oy){ // Case III
-        y = 0;
-  
-      }else if(this.Ox < hole.Ox && this.Oy > hole.Oy){ //Case 3
-        y = y*-1;
-  
-      }else if(this.Ox === hole.Ox && this.Oy < hole.Oy){ //Case IV
-        x = 0;
-        y = y*-1;
-  
-      }else if(this.Ox > hole.Ox && this.Oy > hole.Oy){ //Case 4
-        x = x*-1;
-        y = y*-1;
+const earth = new Planet(
+  7,
+  width/2 - 300,
+  height/2,
+  "#02AE99",
+  Math.pow(5.9,24),
+  "earth"
+)
+
+const mars = new Planet(
+  7,
+  width/2 + 400,
+  height/2 - 200,
+  "#FF0068",
+  Math.pow(5.9,24),
+  "mars"
+)
+
+const venus = new Planet(
+  7,
+  width/2 + 550,
+  height/2 + 200,
+  "orange",
+  Math.pow(10,40),
+  "venus"
+)
+
+const monoko = new Planet(
+  7,
+  width/2,
+  height/2 - 500,
+  "#C5FF00",
+  Math.pow(10,40),
+  "monoko"
+)
+
+planets.push(mars, earth, venus, monoko);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+holes.push(hole);
+function draw() {
+  // put drawing code here
+  backgroundColor = ("whitesmoke");
+  background(backgroundColor);
+
+  planets.forEach(element => {
+    let isOut  = element.isOut();
+    if(isOut === false){
+      element.put();
+      if(element.destroy(holes) === false){
+        element.feelGravity(holes);
+        position = element.sumVectors(vectors);
+        element.Ox = element.Ox + position[0];
+        element.Oy = element.Oy + position[1];
+        
+      }else{
+        index = planets.indexOf(element);
+        planets.splice(index, 1);
+        console.log(planets);
       }
-      
-      var position = [x,y];
-      vectors.push(position);
-    });
+      vectors.splice(0, vectors.length);  
 
-
-  }
-
-  sumVectors(vectors){
-    let x = 0;
-    let y = 0;
-    for(let w = 0; w < vectors.length; w++){
-      x = x + vectors[w][0];;
-      y = y + vectors[w][1];
     }
-    
-    let position = [x, y];
-    return position;
-  }
+  });
+
+
+  holes.forEach(element =>{
+    let isOutt = element.isOut();
+    if(isOutt === false){
+      element.put();
+    }
+  })
   
-  destroy(holes){
-    let destroy = false;
-    let d = 0;
-    holes.forEach(hole => {
-      let distance = Math.sqrt(Math.pow(this.Ox - hole.Ox, 2) +  Math.pow(this.Oy - hole.Oy, 2))// #1
-      if(distance <= sunSize-10){
-        d++;
-      }
-    });
-    if(d > 0){
-      destroy = true;
-    }
-    return destroy;
-  }
 }
