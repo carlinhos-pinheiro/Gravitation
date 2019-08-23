@@ -102,6 +102,8 @@ function mouseClicked(event){ // this funtions has call back funtion every time 
     document.body.style.cursor = "default";
   }else if(y > canvasOy && adding[0] === true && adding[1] === 1){
     putHole(x,y);
+    adding = false;
+    document.body.style.cursor = "default";
   }
   return false;
 }
