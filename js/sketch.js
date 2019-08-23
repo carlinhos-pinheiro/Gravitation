@@ -118,10 +118,16 @@ function draw() {
         element.Ox = element.Ox + position[0];
         element.Oy = element.Oy + position[1];
       }else{
-
+        biggerHole = new Hole(
+          destroyHole[1],
+          element.Ox,
+          element.Oy,
+          "black",
+          destroyHole[2],
+        );
         index = holes.indexOf(element);
         holes.splice(index, 1);
-        holes.splice(destroyHole[1], 1);;
+        holes.push(biggerHole);
       }
       vectors.splice(0, vectors.length);
 
