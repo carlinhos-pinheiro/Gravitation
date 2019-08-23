@@ -92,7 +92,7 @@ function draw() {
       element.put();
       if(element.destroy(holes) === false){
         element.feelGravity(holes);
-        position = element.sumVectors(vectors);
+        let position = element.sumVectors(vectors);
         element.Ox = element.Ox + position[0];
         element.Oy = element.Oy + position[1];
         
@@ -111,7 +111,22 @@ function draw() {
     let isOutt = element.isOut();
     if(isOutt === false){
       element.put();
+      destroyHole = element.destroyHole(holes);
+      if(destroyHole[0] === false){
+        element.feelGravityHoles(holes);
+        position = element.sumVectors(vectors);
+        element.Ox = element.Ox + position[0];
+        element.Oy = element.Oy + position[1];
+      }else{
+
+        index = holes.indexOf(element);
+        holes.splice(index, 1);
+        holes.splice(destroyHole[1], 1);;
+      }
+      vectors.splice(0, vectors.length);
+
     }
   })
   
 }
+
