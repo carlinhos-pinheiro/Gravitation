@@ -118,18 +118,25 @@ class Hole extends Body{
     let create = false;
     let d = 0;
     let index = null;
+    let mass = this.mass;
+    let size = this.size;
+
     holes.forEach(hole => {
       let distance = Math.sqrt(Math.pow(this.Ox - hole.Ox, 2) +  Math.pow(this.Oy - hole.Oy, 2))// #1
       if(distance <= sunSize-10 && holes.indexOf(this) !== holes.indexOf(hole)){
+        mass = mass + hole.mass;
+        size = (size + hole.size)*0.8;
+        console.log(size, hole.size);
+        index = holes.indexOf(hole);
+        holes.splice(index, 1);
         d++;
       }
     });
     if(d > 0){
       create = true;
-      index = holes.indexOf(hole);
     }
-    let isBend = [create, index];
-    return isBend;
+    let arr = [create, size, mass];
+    return arr;
   }
 }
 
