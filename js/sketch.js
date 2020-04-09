@@ -1,9 +1,3 @@
-
-//Functions////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-//Necessary variables/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 let canvasOx = 0;
 let canvasOy = 70;
 
@@ -99,7 +93,6 @@ function draw() {
       }else{
         index = planets.indexOf(element);
         planets.splice(index, 1);
-        console.log(planets);
       }
       vectors.splice(0, vectors.length);  
 
